@@ -13,6 +13,7 @@ public class main {
     }
     public static void main(String args[])
     {
+        Frame fr = new Frame();
         Agent A = new Agent();
         Agent B = new Agent();
         Agent C = new Agent();
