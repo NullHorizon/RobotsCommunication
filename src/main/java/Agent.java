@@ -203,6 +203,7 @@ public class Agent {
             public void run() {
                 this.cancel();
                 main.logging("SEND message: " + msg + " from Agent " + currentAgent.getId() + " to Agent " + a.getId());
+                main.fr.addLine(a.getPos(), currentAgent.getPos(), Color.RED);
                 a.getMessage(currentAgent, msg);
             }
         }, delayOnGenerate + delayOnSending);
@@ -211,8 +212,9 @@ public class Agent {
     public void getMessage(final Agent a, final String msg)
     {
         main.logging("Agent " + this.getId() + " GET message from Agent " + a.getId() + ": " + msg);
-        if (msg == CONST.ACCMSG)
+        if (msg.equals(CONST.ACCMSG))
         {
+            main.fr.removeLine(a.getPos(), this.getPos());
             return;
         }
         this.q.addToQueue(a, getDelayFromLenWithAnalyze(msg));
