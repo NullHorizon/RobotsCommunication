@@ -80,13 +80,14 @@ public class Frame extends JFrame implements ActionListener {
         lines.add(new Line(p1,p2));
     }
 
-    public void removeLine(Point p1, Point p2){
-        for (int i=0; i<lines.size(); i++){
-            Line l=lines.get(i);
-            if ((l.p1==p1 && l.p2==p2) || (l.p1==p2 && l.p2==p1)){
+    public void removeLine(Point p1, Point p2) {
+        for (int i = 0; i < lines.size(); i++) {
+            Line l = lines.get(i);
+            if ((l.p1 == p1 && l.p2 == p2) || (l.p1 == p2 && l.p2 == p1)) {
                 lines.remove(i);
             }
         }
+    }
 
     public int getQueType(){
         if (que1_butt.isSelected()){
