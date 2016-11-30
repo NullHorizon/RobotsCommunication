@@ -74,10 +74,12 @@ public class Frame extends JFrame implements ActionListener {
 
     public void addLine(Point p1, Point p2, Color color){
         lines.add(new Line(p1,p2,color));
+        repaint();
     }
 
     public void addLine(Point p1, Point p2){
         lines.add(new Line(p1,p2));
+        repaint();
     }
 
     public void removeLine(Point p1, Point p2){
@@ -87,6 +89,7 @@ public class Frame extends JFrame implements ActionListener {
                 lines.remove(i);
             }
         }
+        repaint();
     }
 
     public int getQueType(){
