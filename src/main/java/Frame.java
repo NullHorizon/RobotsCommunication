@@ -15,7 +15,7 @@ public class Frame extends JFrame implements ActionListener {
     private final int w=CONST.width+200, h=CONST.height;
     private JRadioButton que1_butt, que2_butt, que3_butt,cluster1_butt, cluster2_butt, cluster3_butt;
     private JButton someButt;
-    ArrayList<Line> lines;
+    private ArrayList<Line> lines;
 
     public Frame(){
         super("Robots communication");
@@ -74,12 +74,10 @@ public class Frame extends JFrame implements ActionListener {
 
     public void addLine(Point p1, Point p2, Color color){
         lines.add(new Line(p1,p2,color));
-        repaint();
     }
 
     public void addLine(Point p1, Point p2){
         lines.add(new Line(p1,p2));
-        repaint();
     }
 
     public void removeLine(Point p1, Point p2){
@@ -89,8 +87,6 @@ public class Frame extends JFrame implements ActionListener {
                 lines.remove(i);
             }
         }
-        repaint();
-    }
 
     public int getQueType(){
         if (que1_butt.isSelected()){
@@ -141,9 +137,9 @@ public class Frame extends JFrame implements ActionListener {
             for (int i=0; i<CONST.N;i++){
                 Agent a=main.agents.get(i);
                 g.setColor(a.getColor());
-                g.fillArc(a.getPos().x,a.getPos().y,a.getR(),a.getR(),0,360)
-                ;
+                g.fillArc(a.getPos().x,a.getPos().y,a.getR(),a.getR(),0,360);
             }
+            System.out.println(lines.size());
             for (int i=0; i<lines.size();i++){
                 lines.get(i).draw(g);
             }
@@ -151,7 +147,7 @@ public class Frame extends JFrame implements ActionListener {
 
     }
 
-    private class Line{
+    private static class Line{
         Color color;
         Point p1, p2;
 

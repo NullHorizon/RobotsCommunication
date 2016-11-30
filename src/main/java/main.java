@@ -7,6 +7,7 @@ import java.util.Date;
  */
 public class main {
     static ArrayList<Agent> agents;
+    public static Frame fr;
     public static void logging(String msg)
     {
         Date date = new Date();
@@ -15,7 +16,7 @@ public class main {
     }
     public static void main(String args[])
     {
-        Frame fr = new Frame();
+        fr = new Frame();
         agents= new ArrayList<Agent>();
         Agent A = new Agent();
         Agent B = new Agent();
@@ -26,8 +27,11 @@ public class main {
         agents.add(C);
         agents.add(D);
         fr.repaint();
-        A.sendMessage(D, "Hello!");
+        agents.get(0).sendMessage(agents.get(3), "Hello");
+        agents.get(1).sendMessage(agents.get(3), "Hello");
+        agents.get(2).sendMessage(agents.get(3), "Hello");
+        /*A.sendMessage(D, "Hello!");
         B.sendMessage(D, "HelloHelloHello!");
-        C.sendMessage(D, "HelloHelloHelloHelloHelloHello!");
+        C.sendMessage(D, "HelloHelloHelloHelloHelloHello!");*/
     }
 }
