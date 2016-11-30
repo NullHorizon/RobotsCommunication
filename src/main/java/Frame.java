@@ -72,21 +72,24 @@ public class Frame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    public void addLine(Point p1, Point p2, Color color){
+    public synchronized void addLine(Point p1, Point p2, Color color){
         lines.add(new Line(p1,p2,color));
+        this.repaint();
     }
 
-    public void addLine(Point p1, Point p2){
+    public synchronized void addLine(Point p1, Point p2){
         lines.add(new Line(p1,p2));
+        this.repaint();
     }
 
-    public void removeLine(Point p1, Point p2) {
-        for (int i = 0; i < lines.size(); i++) {
-            Line l = lines.get(i);
+    public synchronized void  removeLine(Point p1, Point p2){
+        for (int i=0; i<lines.size();i++){
+            Line l=lines.get(i);
             if ((l.p1 == p1 && l.p2 == p2) || (l.p1 == p2 && l.p2 == p1)) {
-                lines.remove(i);
+                lines.remove(l);
             }
         }
+        this.repaint();
     }
 
     public int getQueType(){
@@ -115,7 +118,7 @@ public class Frame extends JFrame implements ActionListener {
         return 0;
     }
 
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed (ActionEvent e) {
         /*switch (e.getActionCommand()){
             case "Some button": main.logging("Something happend");
         }*/
@@ -132,17 +135,17 @@ public class Frame extends JFrame implements ActionListener {
         }
 
         @Override
-        public void paint(Graphics g){
+        public synchronized  void paint(Graphics g){
             g.setColor(Color.WHITE);
             g.fillRect(0,0,w,h);
             for (int i=0; i<CONST.N;i++){
                 Agent a=main.agents.get(i);
                 g.setColor(a.getColor());
-                g.fillArc(a.getPos().x,a.getPos().y,a.getR(),a.getR(),0,360);
+                int r=a.getR();
+                g.fillOval(a.getPos().x-r,a.getPos().y-r,r*2,r*2);
             }
-            System.out.println(lines.size());
-            for (int i=0; i<lines.size();i++){
-                lines.get(i).draw(g);
+            for (Line l: lines) {
+                l.draw(g);
             }
         }
 

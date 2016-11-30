@@ -6,7 +6,7 @@ import java.awt.*;
 public class CONST {
     public final static int width = 500;
     public final static int height = 500;
-    public final static int R = 8;
+    public final static int R = 6;
     public final static Color color = Color.BLUE;
     public final static int MAXID = 1000000;
     public final static double LENKOEF = 64;
