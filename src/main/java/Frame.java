@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Frame extends JFrame implements ActionListener {
 
     private JPanel but_panel, robots_panel, cluster_panel, que_panel ;
-    private final int w=CONST.width+200, h=CONST.height;
+    private final int w=CONST.width+200+60, h=CONST.height+60;
     private JRadioButton que1_butt, que2_butt, que3_butt,cluster1_butt, cluster2_butt, cluster3_butt;
     private JButton someButt;
     private ArrayList<Line> lines;
@@ -35,7 +35,8 @@ public class Frame extends JFrame implements ActionListener {
 
         cluster_panel=new JPanel();
         cluster_panel.setBorder(BorderFactory.createLoweredBevelBorder());
-        cluster_panel.setLayout(new GridLayout(3,1));
+        cluster_panel.setLayout(new GridLayout(4,1));
+        cluster_panel.add(new JLabel("Cluster type:"));
         ButtonGroup cluster_group= new ButtonGroup();
         cluster1_butt=new JRadioButton("No cluster", true);
         cluster2_butt=new JRadioButton("Simple cluster", false);
@@ -50,7 +51,8 @@ public class Frame extends JFrame implements ActionListener {
 
         que_panel=new JPanel();
         que_panel.setBorder(BorderFactory.createLoweredBevelBorder());
-        que_panel.setLayout(new GridLayout(3,1));
+        que_panel.setLayout(new GridLayout(4,1));
+        que_panel.add(new JLabel("Que type:"));
         ButtonGroup que_group= new ButtonGroup();
         que1_butt=new JRadioButton("Que type 1", true);
         que2_butt=new JRadioButton("Que type 2", false);
@@ -142,7 +144,7 @@ public class Frame extends JFrame implements ActionListener {
                 Agent a=main.agents.get(i);
                 g.setColor(a.getColor());
                 int r=a.getR();
-                g.fillOval(a.getPos().x-r,a.getPos().y-r,r*2,r*2);
+                g.fillOval(a.getPos().x-r+25,a.getPos().y-r+25,r*2,r*2);
             }
             for (Line l: lines) {
                 l.draw(g);
@@ -169,7 +171,7 @@ public class Frame extends JFrame implements ActionListener {
 
         public void draw(Graphics g){
             g.setColor(color);
-            g.drawLine(p1.x, p1.y, p2.x, p2.y);
+            g.drawLine(p1.x+25, p1.y+25, p2.x+25, p2.y+25);
         }
     }
 }

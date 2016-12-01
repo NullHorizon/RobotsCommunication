@@ -13,5 +13,6 @@ public class CONST {
     public final static double ANALYZKOEF = 512;
     public final static double DISTKOEF = 100;
     public final static String ACCMSG = "ACCEPTED";
-    public final static int N=4;
+    public final static int N=100;
+    public final static int CLUSTERS_NUM=8;
 }

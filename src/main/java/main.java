@@ -16,6 +16,10 @@ public class main {
     }
     public static void main(String args[])
     {
+        testB();
+    }
+
+    public static void testA(){
         fr = new Frame();
         agents= new ArrayList<Agent>();
         Agent A = new Agent();
@@ -33,5 +37,15 @@ public class main {
         /*A.sendMessage(D, "Hello!");
         B.sendMessage(D, "HelloHelloHello!");
         C.sendMessage(D, "HelloHelloHelloHelloHelloHello!");*/
+    }
+
+    public static void testB(){
+        fr = new Frame();
+        agents=new ArrayList<Agent>();
+        for (int i=0; i<CONST.N; i++){
+            agents.add(new Agent());
+        }
+        Clusterator.clusterisation();
+        fr.repaint();
     }
 }
