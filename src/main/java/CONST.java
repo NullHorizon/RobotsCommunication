@@ -12,10 +12,10 @@ public class CONST {
     public final static double LENKOEF = 64;
     public final static double ANALYZKOEF = 512;
     public final static double DISTKOEF = 100;
-    public final static String ACCMSG = "ACCEPTED";
-    public final static int N=30;
-    public final static int CLUSTERS_NUM=3;
-    public final static int friendPairNum=12;
-    public final static int SEED=1; //if seed=0 {seed=random}
-    public final static int taskNum = 15;
+    public final static String READMSG = "READ";
+    public final static String SENTMSG = "SENT";
+    public final static int N=100;
+    public final static int CLUSTERS_NUM=8;
+    public final static int friendPairNum=50;
+    public final static int SEED=0; //if seed=0 {seed=random}
 }
