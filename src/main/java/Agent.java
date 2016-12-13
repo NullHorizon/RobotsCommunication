@@ -225,29 +225,25 @@ public class Agent {
     {
         int delayOnGenerate = getDelayFromLen(msg);
         int delayOnSending = getDelayFromDist(a.getPos());
-        final Agent currentAgent = this;
-        Timer tmr = new Timer();
-        tmr.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                this.cancel();
-                main.logging("SEND message: " + msg + " from Agent " + currentAgent.getId() + " to Agent " + a.getId());
-                main.fr.addLine(a.getPos(), currentAgent.getPos(), Color.RED);
-                a.getMessage(currentAgent, msg);
-            }
-        }, delayOnGenerate + delayOnSending);
+        this.q.addToQueue(a, delayOnGenerate + delayOnSending, "SEND", msg);
+
+        /*final Agent currentAgent = this;
+        main.logging("SEND message: " + msg + " from Agent " + currentAgent.getId() + " to Agent " + a.getId());
+        main.fr.addLine(a.getPos(), currentAgent.getPos(), Color.RED);
+        a.getMessage(currentAgent, msg);*/
     }
 
     public void getMessage(final Agent a, final Message msg)
     {
-        main.logging("Agent " + this.getId() + " GET message from Agent " + a.getId() + ": " + msg);
-        if (msg.equals(CONST.ACCMSG))
+        main.logging(this.getId() + " GET MESSAGE FROM " + a.getId() + ": " + msg);
+        if (msg.getContent().equals(CONST.READMSG))
         {
+            main.logging(this.getId() + " GET CONFIRMATION MESSAGE  FROM " + a.getId());
             main.fr.removeLine(a.getPos(), this.getPos());
+            //main.logging("LINE " + a.getPos() + " " + this.getPos() + " REMOVED");
             return;
         }
-        this.q.addToQueue(a, getDelayFromLenWithAnalyze(msg));
-        main.logging("Agent " + a.getId() + " is in Queue on place: " + q.whereIs(a));
-        main.logging(q.toString());
+
+        this.q.addToQueue(a, getDelayFromLenWithAnalyze(msg), "GET", msg);
     }
 }

@@ -142,7 +142,7 @@ public class Frame extends JFrame implements ActionListener {
         public synchronized  void paint(Graphics g){
             g.setColor(Color.WHITE);
             g.fillRect(0,0,w,h);
-            for (int i=0; i<CONST.N;i++){
+            for (int i=0; i<main.agents.size();i++){
                 Agent a=main.agents.get(i);
                 g.setColor(a.getColor());
                 int r=a.getR();

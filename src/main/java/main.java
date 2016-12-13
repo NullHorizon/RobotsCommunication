@@ -16,24 +16,28 @@ public class main {
     }
     public static void main(String args[])
     {
-        testB();
+        testA();
     }
 
     public static void testA(){
         fr = new Frame();
-        agents= new ArrayList<Agent>();
+        agents = new ArrayList<Agent>();
         Agent A = new Agent();
         Agent B = new Agent();
         Agent C = new Agent();
         Agent D = new Agent();
+        Agent E = new Agent();
         agents.add(A);
         agents.add(B);
         agents.add(C);
         agents.add(D);
+        agents.add(E);
         fr.repaint();
-        agents.get(0).sendMessage(agents.get(3), new Message("Hello", null));
-        agents.get(1).sendMessage(agents.get(3), new Message("HelloOLOLO", null));
-        agents.get(2).sendMessage(agents.get(3), new Message("HelloOLOLOHelloOLOLO", null));
+        agents.get(0).sendMessage(agents.get(1), new Message("HelloHelloHello", null, agents.get(1)));
+        agents.get(0).sendMessage(agents.get(2), new Message("HelloHelloHello", null, agents.get(2)));
+        agents.get(0).sendMessage(agents.get(3), new Message("HelloHelloHello", null, agents.get(3)));
+        agents.get(0).sendMessage(agents.get(4), new Message("HelloHelloHello", null, agents.get(4)));
+        //agents.get(0).sendMessage(agents.get(3), new Message("Hello", null, agents.get(4)));
         /*A.sendMessage(D, "Hello!");
         B.sendMessage(D, "HelloHelloHello!");
         C.sendMessage(D, "HelloHelloHelloHelloHelloHello!");*/
