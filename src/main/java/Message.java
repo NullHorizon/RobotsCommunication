@@ -7,11 +7,13 @@ public class Message
 {
     private String content;
     private ArrayList<Agent> chain;
+    private Agent target;
 
-    public Message(String x, ArrayList<Agent> a)
+    public Message(String x, ArrayList<Agent> a, Agent t)
     {
         this.content = x;
         this.chain = a;
+        this.target = t;
         if (this.chain == null)
             this.chain = new ArrayList<Agent>();
     }
@@ -23,6 +25,15 @@ public class Message
     public String getContent()
     {
         return this.content;
+    }
+
+    public void setTarget(Agent x)
+    {
+        this.target = x;
+    }
+    public Agent getTarget()
+    {
+        return this.target;
     }
 
     public ArrayList<Agent> getChain()

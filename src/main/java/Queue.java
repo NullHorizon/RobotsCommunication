@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -8,92 +9,97 @@ import java.util.Vector;
  */
 public class Queue {
 
-    static class Pair {
-        private Agent A;
-        private int B;
+    static class messageData {
+        private Agent agent;
+        private int delay;
+        private String type;
+        private Message msg;
 
-        public Pair(Agent a, int b)
+        public messageData(Agent a, int b, String t, Message c)
         {
-            this.A = a;
-            this.B = b;
+            this.agent = a;
+            this.delay = b;
+            this.type = t;
+            this.msg = c;
         }
 
-        public Agent getA()
+        public Agent getAgent()
         {
-            return this.A;
+            return this.agent;
         }
 
-        public void setA(Agent a)
+        public void setAgent(Agent a)
         {
-            this.A = a;
+            this.agent = a;
         }
 
-        public int getB()
+        public int getDelay()
         {
-            return this.B;
+            return this.delay;
         }
 
-        public void setB(int b)
+        public void setDElay(int b)
         {
-            this.B = b;
+            this.delay = b;
         }
 
-        @Override
-        public boolean equals(Object o)
+        public String getType()
         {
-            if (o == null) {
-                return false;
-            }
-            if (o == this) {
-                return true;
-            }
-            if (!(o instanceof Pair)) {
-                return false;
-            }
-            Pair p =(Pair)o;
-            return (p.getA() == this.getA());
+            return this.type;
         }
 
-        @Override
-        public int hashCode()
+        public void setType(String a)
         {
-            int hash = 31;
-            int koef = 17;
-            hash += koef * this.getA().getId();
-            return hash;
+            this.type = a;
         }
 
-        @Override
-        public String toString()
+        public Message getMessage()
         {
-            return A.toString();
+            return this.msg;
         }
 
+        public void setMessage(Message a)
+        {
+            this.msg = a;
+        }
     }
 
-    private Vector<Pair> elements;
+    private Vector<messageData> elements;
     private boolean working;
     private Agent owner;
 
     public Queue(Agent a)
     {
-        this.elements = new Vector<Pair>();
+        this.elements = new Vector<messageData>();
         this.owner = a;
+        Work();
     }
 
-    public void addToQueue(Agent a, int delay)
+    public void addToQueue(Agent a, int delay, String type, Message msg)
     {
-        this.elements.add(new Pair(a, delay));
-        if (!this.working) {
-            this.Work();
+        if (this.elements.isEmpty()) {
+            this.elements.add(new messageData(a, delay, type, msg));
+            Work();
+        } else {
+            this.elements.add(new messageData(a, delay, type, msg));
         }
     }
 
-    public void removeFromQueue(final Pair p)
+    public void removeFromQueue(final messageData p)
     {
-        owner.sendMessage(p.getA(), new Message(CONST.ACCMSG, new ArrayList<Agent>() {{add(p.getA());}}));
+        //precessing animation
+        if (p.getType() == "SEND") {
+            main.logging(owner.getId() + " SENT MESSAGE " + p.getMessage().getContent() + " TO " + p.getAgent().getId());
+            p.getAgent().getMessage(owner, p.getMessage());
+        } else
+        {
+            main.logging(owner.getId() + " READ MESSAGE " + p.getMessage().getContent() + " FROM " + p.getAgent().getId());
+            owner.sendMessage(p.getAgent(), new Message(CONST.READMSG, new ArrayList<Agent>() {{
+                add(owner);
+            }}, p.getAgent()));
+        }
         this.elements.remove(p);
-        main.logging(this.toString());
+        //main.logging(this.toString());
     }
 
     public Agent nowInWork()
@@ -101,12 +107,7 @@ public class Queue {
         if (this.elements.isEmpty()) {
             return null;
         }
-        return this.elements.firstElement().getA();
-    }
-
-    public int whereIs(Agent a)
-    {
-        return this.elements.indexOf(new Pair(a, -1));
+        return this.elements.firstElement().getAgent();
     }
 
     public int getLength() {
@@ -115,28 +116,34 @@ public class Queue {
 
     private void Work()
     {
-        this.working = false;
-        if (!elements.isEmpty())
-        {
-            this.working = true;
-            final Pair firstElement = this.elements.firstElement();
-            Timer tmr = new Timer();
-            tmr.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    this.cancel();
-                    removeFromQueue(firstElement);
-                    Work();
-                }
-            }, firstElement.getB());
+        if (this.elements.isEmpty())
+            return;
+
+        final messageData firstElement = this.elements.firstElement();
+
+        if (firstElement.getType().equals("GET")) {
+            main.logging(owner.getId() + " READING MESSAGE " + firstElement.getMessage().getContent() + " FROM " + firstElement.getAgent().getId());
+        } else {
+            main.logging(owner.getId() + " SENDING MESSAGE " + firstElement.getMessage().getContent() + " TO " + firstElement.getAgent().getId());
         }
+        main.fr.addLine(owner.getPos(), firstElement.getAgent().getPos(), Color.RED);
+
+        Timer tmr = new Timer();
+        tmr.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                this.cancel();
+                removeFromQueue(firstElement);
+                Work();
+            }
+        }, firstElement.getDelay());
     }
 
     @Override
     public String toString()
     {
         String ans = "Elements in queue: ";
-        for(Pair p : this.elements)
+        for(messageData p : this.elements)
         {
             ans += (" " + p.toString());
         }
