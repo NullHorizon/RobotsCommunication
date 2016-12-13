@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -8,11 +9,61 @@ import java.util.TimerTask;
  * Created by AsmodeusX on 30.11.2016.
  */
 public class Agent {
+    private class Message
+    {
+        private String content;
+        private ArrayList<Agent> chain;
+
+        public void setContent(String x)
+        {
+            this.content = x;
+        }
+        public String getContent()
+        {
+            return this.content;
+        }
+
+        public ArrayList<Agent> getChain()
+        {
+            return this.chain;
+        }
+
+        public boolean addToChain(Agent a)
+        {
+            if (this.chain.indexOf(a) != -1)
+            {
+                this.chain.add(a);
+                return true;
+            }
+            return false;
+        }
+
+        public boolean removeFromChain(Agent a)
+        {
+            if (this.chain.indexOf(a) != -1)
+            {
+                this.chain.remove(this.chain.indexOf(a));
+                return true;
+            }
+            return false;
+        }
+
+        public String toString()
+        {
+            String chainStr = "";
+            for(int i = 0; i < this.chain.size(); i++)
+                chainStr += this.chain.get(i).getId();
+            return chainStr + " " + this.content;
+        }
+    }
+
     private int id;
     private Point pos;
     private Color color;
     private int R;
     private Queue q;
+    private ArrayList<Agent> Connected;
+
 
     public Agent()
     {
@@ -142,6 +193,33 @@ public class Agent {
         return this.id;
     }
 
+    public ArrayList<Agent> getConnected() { return this.Connected; }
+
+    public void setConnected(ArrayList<Agent> agents)
+    {
+        this.Connected = agents;
+    }
+
+    public boolean addConnected(Agent a)
+    {
+        if (this.Connected.indexOf(a) != -1) {
+            this.Connected.add(a);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean removeConnected(Agent a)
+    {
+        if (this.Connected.indexOf(a) != -1) {
+            this.Connected.remove(this.Connected.indexOf(a));
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     @Override
     public String toString() {
         //return "Agent with ID: " + this.getId() + " is at Point: " + this.getPos().getX() + "." + this.getPos().getY() + " with R: " + this.getR() + " and has color: " + this.getColor().toString();
@@ -176,14 +254,14 @@ public class Agent {
         return hash;
     }
 
-    private int getDelayFromLen(String msg)
+    private int getDelayFromLen(Message msg)
     {
-        return (int)Math.round(msg.length() * CONST.LENKOEF);
+        return (int)Math.round(msg.getContent().length() * CONST.LENKOEF);
     }
 
-    private int getDelayFromLenWithAnalyze(String msg)
+    private int getDelayFromLenWithAnalyze(Message msg)
     {
-        return (int)Math.round(msg.length() * CONST.ANALYZKOEF);
+        return (int)Math.round(msg.getContent().length() * CONST.ANALYZKOEF);
     }
 
     private int getDelayFromDist(Point p)
@@ -192,7 +270,7 @@ public class Agent {
         return (int)Math.round(dist * CONST.DISTKOEF);
     }
 
-    public void sendMessage(final Agent a, final String msg)
+    public void sendMessage(final Agent a, final Message msg)
     {
         int delayOnGenerate = getDelayFromLen(msg);
         int delayOnSending = getDelayFromDist(a.getPos());
@@ -209,7 +287,7 @@ public class Agent {
         }, delayOnGenerate + delayOnSending);
     }
 
-    public void getMessage(final Agent a, final String msg)
+    public void getMessage(final Agent a, final Message msg)
     {
         main.logging("Agent " + this.getId() + " GET message from Agent " + a.getId() + ": " + msg);
         if (msg.equals(CONST.ACCMSG))
