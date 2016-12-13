@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
@@ -88,9 +89,9 @@ public class Queue {
         }
     }
 
-    public void removeFromQueue(Pair p)
+    public void removeFromQueue(final Pair p)
     {
-        owner.sendMessage(p.getA(), CONST.ACCMSG);
+        owner.sendMessage(p.getA(), new Message(CONST.ACCMSG, new ArrayList<Agent>() {{add(p.getA());}}));
         this.elements.remove(p);
         main.logging(this.toString());
     }

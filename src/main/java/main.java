@@ -31,9 +31,9 @@ public class main {
         agents.add(C);
         agents.add(D);
         fr.repaint();
-        agents.get(0).sendMessage(agents.get(3), "Hello");
-        agents.get(1).sendMessage(agents.get(3), "Hello");
-        agents.get(2).sendMessage(agents.get(3), "Hello");
+        agents.get(0).sendMessage(agents.get(3), new Message("Hello", null));
+        agents.get(1).sendMessage(agents.get(3), new Message("HelloOLOLO", null));
+        agents.get(2).sendMessage(agents.get(3), new Message("HelloOLOLOHelloOLOLO", null));
         /*A.sendMessage(D, "Hello!");
         B.sendMessage(D, "HelloHelloHello!");
         C.sendMessage(D, "HelloHelloHelloHelloHelloHello!");*/

@@ -9,61 +9,12 @@ import java.util.TimerTask;
  * Created by AsmodeusX on 30.11.2016.
  */
 public class Agent {
-    private class Message
-    {
-        private String content;
-        private ArrayList<Agent> chain;
-
-        public void setContent(String x)
-        {
-            this.content = x;
-        }
-        public String getContent()
-        {
-            return this.content;
-        }
-
-        public ArrayList<Agent> getChain()
-        {
-            return this.chain;
-        }
-
-        public boolean addToChain(Agent a)
-        {
-            if (this.chain.indexOf(a) != -1)
-            {
-                this.chain.add(a);
-                return true;
-            }
-            return false;
-        }
-
-        public boolean removeFromChain(Agent a)
-        {
-            if (this.chain.indexOf(a) != -1)
-            {
-                this.chain.remove(this.chain.indexOf(a));
-                return true;
-            }
-            return false;
-        }
-
-        public String toString()
-        {
-            String chainStr = "";
-            for(int i = 0; i < this.chain.size(); i++)
-                chainStr += this.chain.get(i).getId();
-            return chainStr + " " + this.content;
-        }
-    }
-
     private int id;
     private Point pos;
     private Color color;
     private int R;
     private Queue q;
     private ArrayList<Agent> Connected;
-
 
     public Agent()
     {
