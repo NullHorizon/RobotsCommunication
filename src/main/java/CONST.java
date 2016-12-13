@@ -15,4 +15,6 @@ public class CONST {
     public final static String ACCMSG = "ACCEPTED";
     public final static int N=100;
     public final static int CLUSTERS_NUM=8;
+    public final static int friendPairNum=50;
+    public final static int SEED=0; //if seed=0 {seed=random}
 }

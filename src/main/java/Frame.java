@@ -65,6 +65,7 @@ public class Frame extends JFrame implements ActionListener {
         que_panel.add(que3_butt);
         but_panel.add(que_panel);
 
+
         add(but_panel);
 
         robots_panel=new RobotsPanel(w-200,h);
@@ -119,6 +120,7 @@ public class Frame extends JFrame implements ActionListener {
         }
         return 0;
     }
+
 
     public void actionPerformed (ActionEvent e) {
         /*switch (e.getActionCommand()){

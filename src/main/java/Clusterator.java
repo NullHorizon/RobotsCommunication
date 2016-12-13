@@ -76,18 +76,17 @@ public class Clusterator {
         private static final Color[] colors= { Color.green, Color.black, Color.yellow, Color.pink,
                 Color.orange, Color.cyan, Color.GRAY, Color.RED, Color.BLUE};
         private static int colorNum=0;
-        private static  Random r= new Random();
 
         private Cluster(){
             agents=new ArrayList<Agent>();
             color=colors[colorNum];
             colorNum=(colorNum+1)%colors.length;
-            id=r.nextInt();
+            id=StRandom.nextInt();
         }
 
         private Point getCom(){
             if (agents.size()==0){
-                return main.agents.get(r.nextInt(main.agents.size())).getPos();
+                return main.agents.get(StRandom.nextInt(main.agents.size())).getPos();
             }
             Point ans = new Point(0,0);
             for (Agent a: agents){
