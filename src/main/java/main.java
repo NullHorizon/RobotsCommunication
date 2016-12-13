@@ -16,7 +16,7 @@ public class main {
     }
     public static void main(String args[])
     {
-        testB();
+        testC();
     }
 
     public static void testA(){
@@ -32,8 +32,8 @@ public class main {
         agents.add(D);
         fr.repaint();
         agents.get(0).sendMessage(agents.get(3), new Message("Hello", null));
-        agents.get(1).sendMessage(agents.get(3), new Message("HelloOLOLO", null));
-        agents.get(2).sendMessage(agents.get(3), new Message("HelloOLOLOHelloOLOLO", null));
+        agents.get(1).sendMessage(agents.get(3), new Message("Hell", null));
+        agents.get(2).sendMessage(agents.get(3), new Message("Hello", null));
         /*A.sendMessage(D, "Hello!");
         B.sendMessage(D, "HelloHelloHello!");
         C.sendMessage(D, "HelloHelloHelloHelloHelloHello!");*/
@@ -47,5 +47,12 @@ public class main {
         }
         Clusterator.clusterisation();
         fr.repaint();
+    }
+
+    public static void testC(){
+        fr=new Frame();
+        Generator.generate();
+        fr.repaint();
+        Generator.generateTasks();
     }
 }

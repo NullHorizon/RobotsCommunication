@@ -1,3 +1,5 @@
+import sun.applet.resources.MsgAppletViewer;
+
 import java.awt.*;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -18,7 +20,8 @@ public class Agent {
 
     public Agent()
     {
-        Random rnd = new Random();
+        this.Connected=new ArrayList<Agent>();
+        Random rnd = StRandom.getR();
         int x = rnd.nextInt(CONST.width);
         int y = rnd.nextInt(CONST.height);
         this.setPos(new Point(x, y));
@@ -30,7 +33,8 @@ public class Agent {
 
     public Agent(Color c)
     {
-        Random rnd = new Random();
+        this.Connected=new ArrayList<Agent>();
+        Random rnd =  StRandom.getR();
         int x = rnd.nextInt(CONST.width);
         int y = rnd.nextInt(CONST.height);
         this.setPos(new Point(x, y));
@@ -42,17 +46,19 @@ public class Agent {
 
     public Agent(Point p)
     {
+        this.Connected=new ArrayList<Agent>();
         this.setPos(p);
         this.setColor(CONST.color);
         this.setR(CONST.R);
-        Random rnd = new Random();
+        Random rnd =  StRandom.getR();
         this.setId(rnd.nextInt(CONST.MAXID));
         this.q = new Queue(this);
     }
 
     public Agent(int r)
     {
-        Random rnd = new Random();
+        this.Connected=new ArrayList<Agent>();
+        Random rnd =  StRandom.getR();
         int x = rnd.nextInt(CONST.width);
         int y = rnd.nextInt(CONST.height);
         this.setPos(new Point(x, y));
@@ -64,17 +70,19 @@ public class Agent {
 
     public Agent(Point p, Color c)
     {
+        this.Connected=new ArrayList<Agent>();
         this.setPos(p);
         this.setColor(c);
         this.setR(CONST.R);
-        Random rnd = new Random();
+        Random rnd = StRandom.getR();
         this.setId(rnd.nextInt(CONST.MAXID));
         this.q = new Queue(this);
     }
 
     public Agent(Color c, int r)
     {
-        Random rnd = new Random();
+        this.Connected=new ArrayList<Agent>();
+        Random rnd =  StRandom.getR();
         int x = rnd.nextInt(CONST.width);
         int y = rnd.nextInt(CONST.height);
         this.setPos(new Point(x, y));
@@ -86,20 +94,22 @@ public class Agent {
 
     public Agent(Point p, int r)
     {
+        this.Connected=new ArrayList<Agent>();
         this.setPos(p);
         this.setColor(CONST.color);
         this.setR(r);
-        Random rnd = new Random();
+        Random rnd = StRandom.getR();
         this.setId(rnd.nextInt(CONST.MAXID));
         this.q = new Queue(this);
     }
 
     public Agent(Point p, Color c, int r)
     {
+        this.Connected=new ArrayList<Agent>();
         this.setPos(p);
         this.setColor(c);
         this.setR(r);
-        Random rnd = new Random();
+        Random rnd =  StRandom.getR();
         this.setId(rnd.nextInt(CONST.MAXID));
         this.q = new Queue(this);
     }
@@ -241,7 +251,7 @@ public class Agent {
     public void getMessage(final Agent a, final Message msg)
     {
         main.logging("Agent " + this.getId() + " GET message from Agent " + a.getId() + ": " + msg);
-        if (msg.equals(CONST.ACCMSG))
+        if (msg.getContent().equals(CONST.ACCMSG))
         {
             main.fr.removeLine(a.getPos(), this.getPos());
             return;
